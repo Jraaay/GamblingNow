@@ -30,6 +30,7 @@ class Game:
         self.status = status
         self.start_timestamp_msec = start_timestamp_msec
         self.duration_msec = duration_msec
+        self.participants = set()
 
 
 game = Game("测试用例", "门票先花掉2元：\n(1)如果过半人选A而你也选A,那你将得到1元。\n(2)如果过半人选A而你选B,那你将得到6元。\n(3)如果过半人选B,则选B的扣掉2元，选A的得到4元。",
@@ -82,7 +83,7 @@ async def submit(submit: SubmitItem):
     if dup_flag:
         return {"status": "duplicate"}
     game.allocations[submit.selection].add(submit.user_id)
-    print(game.allocations)
+    game.participants.add(submit.user_id)
     return {"status": "ok"}
 
 
